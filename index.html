@@ -58,20 +58,169 @@
           </div>
 
           <div class="is-size-5 publication-authors">
-            <span class="author-block"><sup>1</sup>Georgia Institute of Technology,</span>
+            <span class="author-block"><sup>1</sup>Georgia Institute of Technology</span>
           </div>
 
         <!-- </br> -->
         <div class="is-size-4 publication-authors">
           <span class="author-block">RSS 2026</span>
         </div>
+          <div class="column has-text-centered">
+            <div class="publication-links">
+              <span class="link-block">
+                <a href="#"
+                   class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon">
+                      <i class="fas fa-file-pdf"></i>
+                  </span>
+                  <span>Paper</span>
+                </a>
+              </span>
+              <span class="link-block">
+                <a href="#"
+                   class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon">
+                      <i class="ai ai-arxiv"></i>
+                  </span>
+                  <span>arXiv</span>
+                </a>
+              </span>
+              <span class="link-block">
+                <a href="#Video"
+                   class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon">
+                      <i class="fab fa-youtube"></i>
+                  </span>
+                  <span>Video</span>
+                </a>
+              </span>
+              <span class="link-block">
+                <a href="https://github.com/trustworthyrobotics/DiffReach"
+                   class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon">
+                      <i class="fab fa-github"></i>
+                  </span>
+                  <span>DiffReach</span>
+                  </a>
+              </span>
+              <span class="link-block">
+                <a href="https://github.com/trustworthyrobotics/DiffReach-Robotics"
+                   class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon">
+                      <i class="fab fa-github"></i>
+                  </span>
+                  <span>DiffReach-Robotics</span>
+                  </a>
+              </span>
+            </div>
+          </div>
         </div>
       </div>
     </div>
   </div>
 </section>
 
+<section class="hero teaser">
+  <div class="container is-max-desktop">
+    <div class="hero-body">
+      <div class="container">
+        <div class="columns is-vcentered is-centered">
+          <img src="static/images/fig_teaser.png" alt="Teaser figure placeholder">
+        </div>
+        <br>
+        <h2 class="subtitle has-text-centered">
+          <b>Reachability-guided learning and planning.</b> We develop a parallel, differentiable reachability framework that integrates certified reachable-set analysis directly into neural dynamics and controller learning and online planning. The figure shows closed-loop MPC rollouts with run-time reachable-set guarantees under bounded uncertainty on manipulation and quadrotor tasks.
+        </h2>
+      </div>
+    </div>
+  </div>
+</section>
 
+<section class="hero is-light is-small">
+  <div class="hero-body">
+    <div class="container is-max-desktop">
+      <div class="columns is-centered has-text-centered">
+        <div class="column is-full-width">
+          <h2 class="title is-3">Main Contributions</h2>
+          <div class="content has-text-justified">
+            <p>
+              Our work aims to make <b>certified reachability</b> practical for modern <b>robot learning and online planning</b> with <b>neural dynamics and controllers</b>. Existing reachability tools are primarily designed for offline verification and are often non-differentiable, computationally inefficient, or overly conservative for direct integration into modern learning and online planning pipelines. Our main contributions are:
+            </p>
+            <ul>
+              <li><strong>Parallel Differentiable Reachability Framework</strong>: We develop a GPU-parallel and differentiable reachability framework in JAX for continuous- and discrete-time systems with analytical and neural-network dynamics and controllers. Our method combines Taylor-model flowpipe propagation with CROWN-style neural certification through a unified TM-CROWN representation.</li>
+              <li><strong>Unified TM-CROWN Reachability Interface</strong>: We introduce a unified affine/Taylor-model interface that propagates certified bounds across both analytical dynamics and neural components without intermediate interval relaxation. This preserves cross-state dependencies while remaining compatible with efficient batched tensor computation.</li>
+              <li><strong>Certified Training and Reachability-Aware MPC</strong>: We demonstrate how differentiable reachable-set objectives can be integrated directly into neural dynamics and controller training, as well as sampling-based MPC with gradient-based refinement, enabling uncertainty-aware learning and online planning with certified reachable-set guarantees.</li>
+              <li><strong>Scalable Robotic Evaluations</strong>: We validate the framework on manipulation and quadrotor tasks, including real-world T-pushing experiments and higher-dimensional systems up to 72D, demonstrating practical runtime and robust online planning under bounded uncertainty.</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <div class="columns is-centered has-text-centered" id="Video">
+        <div class="column is-four-fifths">
+          <h2 class="title is-3">Video</h2>
+          <div class="publication-video">
+            <iframe src="https://www.youtube.com/embed/VIDEO_ID_HERE"
+                    title="DiffReach video placeholder"
+                    frameborder="0"
+                    allow="autoplay; encrypted-media"
+                    allowfullscreen></iframe>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="hero is-light is-small">
+  <div class="hero-body">
+    <div class="container is-max-desktop">
+      <div class="columns is-centered has-text-centered">
+        <div class="column is-full-width">
+          <h2 class="title is-3">Method Overview</h2>
+          <div class="content has-text-justified">
+              <p>
+    Our framework turns reachability analysis into a <b>differentiable, GPU-parallel primitive</b>
+    that can be used directly inside robot learning and online planning.
+  </p>
+
+  <p>
+    The core engine combines <b>Taylor-model flowpipes</b> for system dynamics with
+    <b>CROWN-based verification</b> for neural components through a unified <b>TM-CROWN interface</b>.
+    This allows certified reachable sets to be propagated through analytical dynamics,
+    neural dynamics, and neural controllers while preserving useful dependency information.
+  </p>
+
+  <p>
+    The same engine is used in two downstream pipelines. During <b>certified training</b>,
+    reachable-set penalties regularize neural dynamics and controllers so that uncertainty
+    remains compact over long horizons. During <b>reachability-aware MPC</b>, candidate
+    action sequences are evaluated by both task cost and reachable-set penalties, enabling
+    robust online planning under bounded uncertainty.
+  </p>
+          </div>
+          <div class="columns is-centered has-text-centered">
+            <div class="column is-fullwidth">
+              <img src="static/images/fig_method.png" alt="Method figure placeholder">
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="BibTeX">
+  <div class="container is-max-desktop content">
+    <h2 class="title">BibTeX</h2>
+    <pre><code>@inproceedings{shen2026diffreach,
+  title={Parallel Differentiable Reachability for Learning and Planning with Certified Neural Dynamics and Controllers},
+  author={Keyi Shen and Glen Chou},
+  booktitle={Proceedings of Robotics: Science and Systems (RSS)},
+  year={2026}
+}</code></pre>
+  </div>
+</section>
 
 
 <footer class="footer">
